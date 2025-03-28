@@ -14,6 +14,7 @@ namespace Eye_Health_Helper_V._2
         static async Task Main(string[] args)
         {
             notification.AddText("EYE HEALTH");
+            notification.AddAppLogoOverride(new Uri(@"G:\VS Projects\Eye Health Helper V.2\Eye Health Helper V.2\bin\eye_health.png"));
             notification.AddText("Please take a 20 second break,");
             notification.AddText("staring at something 10 metres away");
             notification.SetToastScenario(ToastScenario.Reminder);
@@ -28,5 +29,6 @@ namespace Eye_Health_Helper_V._2
                 await Task.Delay(1200000); 
             }
         }
+        
     }
 }
