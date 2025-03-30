@@ -13,8 +13,21 @@ namespace Eye_Health_Helper_V._2
 {
     internal class Program
     {
-        private static readonly CancellationTokenSource cts = new CancellationTokenSource();
-        private static readonly string fullPath = Path.GetFullPath("eye_health.png");
+        private static readonly CancellationTokenSource cts;
+        private static readonly string fullPath; 
+        static Program()
+        {
+            try
+            {
+                cts = new CancellationTokenSource();
+                fullPath = Path.GetFullPath("eye_health.png");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error initializing static fields: {e.Message}");
+                fullPath = string.Empty;
+            }
+        }
         static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
