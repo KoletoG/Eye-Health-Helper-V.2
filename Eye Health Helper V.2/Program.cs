@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Notifications;
 using Microsoft.Win32;
+using Serilog;
 namespace Eye_Health_Helper_V._2
 {
     internal class Program
@@ -16,6 +17,10 @@ namespace Eye_Health_Helper_V._2
         private static readonly string fullPath = Path.GetFullPath("eye_health.png");
         static async Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+            Log.Information("App started");
             try
             {
                 Console.WriteLine("Eye Health Helper is running... Press Enter to exit.");
@@ -23,9 +28,15 @@ namespace Eye_Health_Helper_V._2
                 Console.ReadLine();
                 cts.Cancel();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Log.Error(e.ToString());
+            }
+            finally
+            {
+                Log.Information("App has stopped");
+                Log.CloseAndFlush();
             }
         }
         private static async Task ShowNotificationsPeriodically(CancellationToken cancellationToken)
@@ -42,11 +53,12 @@ namespace Eye_Health_Helper_V._2
             }
             catch (OperationCanceledException)
             {
-                Console.WriteLine("Application ended");
+                Console.WriteLine("Application has stopped");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Log.Error(e.ToString());
             }
         }
         private static void ShowNotification(string text1, string text2, ToastDuration duration)
@@ -73,6 +85,7 @@ namespace Eye_Health_Helper_V._2
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
+                Log.Error(e.ToString());
             }
         }
     }
