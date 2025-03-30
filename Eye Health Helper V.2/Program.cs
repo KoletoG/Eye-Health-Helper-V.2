@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Eye_Health_Helper_V._2
     internal class Program
     {
         private static readonly CancellationTokenSource cts = new CancellationTokenSource();
+        private static readonly string fullPath = Path.GetFullPath("eye_health.png");
         static async Task Main(string[] args)
         {
             Console.WriteLine("Eye Health Helper is running... Press Enter to exit.");
@@ -35,7 +37,7 @@ namespace Eye_Health_Helper_V._2
             .AddText("Eye Health")
             .AddText(text1)
             .AddText(text2)
-            .AddAppLogoOverride(new Uri(@"../eye_health.png"))
+            .AddAppLogoOverride(new Uri(fullPath,UriKind.Absolute))
             .SetToastDuration(duration)
             .SetToastScenario(ToastScenario.Reminder)
             .Show();
