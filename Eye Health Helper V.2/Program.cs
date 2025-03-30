@@ -35,7 +35,6 @@ namespace Eye_Health_Helper_V._2
         {
             var logger = services.GetRequiredService<ILogger<Program>>();
             var notificationService = services.GetRequiredService<INotificationsService>();
-            Log.Information("App started");
             try
             {
                 logger.LogInformation("App started");
