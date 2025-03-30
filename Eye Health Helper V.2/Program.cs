@@ -14,18 +14,8 @@ namespace Eye_Health_Helper_V._2
         private static ToastContentBuilder doneNotification = new ToastContentBuilder();
         static async Task Main(string[] args)
         {
-            notification.AddText("EYE HEALTH");
-            notification.AddAppLogoOverride(new Uri(@"G:\VS Projects\Eye Health Helper V.2\Eye Health Helper V.2\bin\eye_health.png"));
-            notification.AddText("Please take a 20 second break,");
-            notification.AddText("staring at something 10 metres away");
-            notification.SetToastScenario(ToastScenario.Reminder);
-            notification.SetToastDuration(ToastDuration.Long);
-            doneNotification.AddText("EYE HEALTH");
-            doneNotification.AddAppLogoOverride(new Uri(@"G:\VS Projects\Eye Health Helper V.2\Eye Health Helper V.2\bin\eye_health.png"));
-            doneNotification.AddText("You can now continue looking at the screen.");
-            doneNotification.AddText("Your eyes will thank you!");
-            doneNotification.SetToastDuration(ToastDuration.Short);
-            doneNotification.SetToastScenario(ToastScenario.Reminder);
+            FillNotification(doneNotification, "You can now continue looking at the screen.", "Your eyes will thank you!", ToastDuration.Short);
+            FillNotification(notification, "Please take a 20 seconds break.", "You should look at something 10 meters away from you.", ToastDuration.Long);
             await ShowNotificationsPeriodically();
         }
         private static async Task ShowNotificationsPeriodically()
@@ -37,6 +27,15 @@ namespace Eye_Health_Helper_V._2
                 doneNotification.Show();
                 await Task.Delay(1200000); 
             }
+        }
+        private static void FillNotification(ToastContentBuilder notification, string text1, string text2, ToastDuration duration)
+        {
+            notification.AddText("Eye Health");
+            notification.AddText(text1);
+            notification.AddText(text2);
+            notification.AddAppLogoOverride(new Uri(@"G:\VS Projects\Eye Health Helper V.2\Eye Health Helper V.2\bin\eye_health.png"));
+            notification.SetToastDuration(duration);
+            notification.SetToastScenario(ToastScenario.Reminder);
         }
     }
 }
