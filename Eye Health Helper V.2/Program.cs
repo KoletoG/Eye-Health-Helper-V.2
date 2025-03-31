@@ -18,21 +18,30 @@ namespace Eye_Health_Helper_V._2
 {
     internal class Program
     {
-        private static readonly IServiceProvider services;
-        static Program()
+        private readonly IServiceProvider services;
+        public Program()
+        {
+            services = ConfigureServices();
+        }
+        private IServiceProvider ConfigureServices()
         {
             var collection = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
             Log.Logger = new LoggerConfiguration()
-            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
             collection.AddLogging(loggingBuilder =>
             {
-                loggingBuilder.AddSerilog(); // Use Serilog as the logging provider
+                loggingBuilder.AddSerilog();
             });
             collection.AddSingleton<INotificationsService, NotificationService>();
-            services=collection.BuildServiceProvider();
+            return collection.BuildServiceProvider();
         }
         static async Task Main(string[] args)
+        {
+            Program program = new Program();
+            await program.Run();
+        }
+        private async Task Run()
         {
             var logger = services.GetRequiredService<ILogger<Program>>();
             var notificationService = services.GetRequiredService<INotificationsService>();
@@ -52,10 +61,9 @@ namespace Eye_Health_Helper_V._2
             }
             finally
             {
-               logger.LogInformation("App has stopped");
+                logger.LogInformation("App has stopped");
                 Log.CloseAndFlush();
             }
         }
-       
     }
 }
