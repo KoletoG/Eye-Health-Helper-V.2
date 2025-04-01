@@ -20,6 +20,11 @@ namespace Eye_Health_Helper_V._2
             _logger = logger;
             _fullPath = Path.GetFullPath("eye_health.png");
         }
+        /// <summary>
+        /// Async method for showing notifications every 20 minutes
+        /// </summary>
+        /// <param name="cancellationToken">Checks if user wants to stop the app</param>
+        /// <returns>Periodical task for notification showing</returns>
         public async Task ShowNotificationsPeriodically(CancellationToken cancellationToken)
         {
             try
@@ -41,6 +46,12 @@ namespace Eye_Health_Helper_V._2
                 _logger.LogError(e.ToString());
             }
         }
+        /// <summary>
+        /// Creates a new notification
+        /// </summary>
+        /// <param name="text1">First line of text</param>
+        /// <param name="text2">Second line of text</param>
+        /// <param name="duration">How much time the notification lasts</param>
         private void ShowNotification(string text1, string text2, ToastDuration duration)
         {
             try

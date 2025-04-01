@@ -23,6 +23,10 @@ namespace Eye_Health_Helper_V._2
         {
             services = ConfigureServices();
         }
+        /// <summary>
+        /// Builds Dependency Injection
+        /// </summary>
+        /// <returns>DI</returns>
         private IServiceProvider ConfigureServices()
         {
             var collection = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
@@ -41,6 +45,10 @@ namespace Eye_Health_Helper_V._2
             Program program = new Program();
             await program.Run();
         }
+        /// <summary>
+        /// Starts the application
+        /// </summary>
+        /// <returns>Application</returns>
         private async Task Run()
         {
             var logger = services.GetRequiredService<ILogger<Program>>();
